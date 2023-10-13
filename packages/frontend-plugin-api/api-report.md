@@ -7,6 +7,8 @@
 
 import { AnyApiFactory } from '@backstage/core-plugin-api';
 import { AnyApiRef } from '@backstage/core-plugin-api';
+import { AnyExternalRoutes } from '@backstage/core-plugin-api';
+import { AnyRoutes } from '@backstage/core-plugin-api';
 import { AppTheme } from '@backstage/core-plugin-api';
 import { IconComponent } from '@backstage/core-plugin-api';
 import { JsonObject } from '@backstage/types';
@@ -40,13 +42,20 @@ export type AnyExtensionInputMap = {
 };
 
 // @public (undocumented)
-export interface BackstagePlugin {
+export interface BackstagePlugin<
+  Routes extends AnyRoutes = AnyRoutes,
+  ExternalRoutes extends AnyExternalRoutes = AnyExternalRoutes,
+> {
   // (undocumented)
   $$type: '@backstage/BackstagePlugin';
   // (undocumented)
   extensions: Extension<unknown>[];
   // (undocumented)
+  externalRoutes: ExternalRoutes;
+  // (undocumented)
   id: string;
+  // (undocumented)
+  routes: Routes;
 }
 
 // @public (undocumented)
@@ -136,7 +145,10 @@ export interface CreateExtensionOptions<
   TConfig,
 > {
   // (undocumented)
-  at: string;
+  attachTo: {
+    id: string;
+    input: string;
+  };
   // (undocumented)
   configSchema?: PortableSchema<TConfig>;
   // (undocumented)
@@ -155,6 +167,11 @@ export interface CreateExtensionOptions<
   // (undocumented)
   output: TOutput;
 }
+
+// @public (undocumented)
+export function createExtensionOverrides(
+  options: ExtensionOverridesOptions,
+): ExtensionOverrides;
 
 // @public
 export function createNavItemExtension(options: {
@@ -182,7 +199,10 @@ export function createPageExtension<
       }
   ) & {
     id: string;
-    at?: string;
+    attachTo?: {
+      id: string;
+      input: string;
+    };
     disabled?: boolean;
     inputs?: TInputs;
     routeRef?: RouteRef;
@@ -194,7 +214,12 @@ export function createPageExtension<
 ): Extension<TConfig>;
 
 // @public (undocumented)
-export function createPlugin(options: PluginOptions): BackstagePlugin;
+export function createPlugin<
+  Routes extends AnyRoutes = AnyRoutes,
+  ExternalRoutes extends AnyExternalRoutes = AnyExternalRoutes,
+>(
+  options: PluginOptions<Routes, ExternalRoutes>,
+): BackstagePlugin<Routes, ExternalRoutes>;
 
 // @public (undocumented)
 export function createSchemaFromZod<TOutput, TInput>(
@@ -209,7 +234,10 @@ export interface Extension<TConfig> {
   // (undocumented)
   $$type: '@backstage/Extension';
   // (undocumented)
-  at: string;
+  attachTo: {
+    id: string;
+    input: string;
+  };
   // (undocumented)
   configSchema?: PortableSchema<TConfig>;
   // (undocumented)
@@ -305,6 +333,18 @@ export type ExtensionInputValues<
 };
 
 // @public (undocumented)
+export interface ExtensionOverrides {
+  // (undocumented)
+  $$type: '@backstage/ExtensionOverrides';
+}
+
+// @public (undocumented)
+export interface ExtensionOverridesOptions {
+  // (undocumented)
+  extensions: Extension<unknown>[];
+}
+
+// @public (undocumented)
 export type NavTarget = {
   title: string;
   icon: IconComponent;
@@ -312,11 +352,18 @@ export type NavTarget = {
 };
 
 // @public (undocumented)
-export interface PluginOptions {
+export interface PluginOptions<
+  Routes extends AnyRoutes,
+  ExternalRoutes extends AnyExternalRoutes,
+> {
   // (undocumented)
   extensions?: Extension<unknown>[];
   // (undocumented)
+  externalRoutes?: ExternalRoutes;
+  // (undocumented)
   id: string;
+  // (undocumented)
+  routes?: Routes;
 }
 
 // @public (undocumented)
@@ -324,7 +371,4 @@ export type PortableSchema<TOutput> = {
   parse: (input: unknown) => TOutput;
   schema: JsonObject;
 };
-
-// @public (undocumented)
-export function useRouteRef(routeRef: RouteRef<any>): () => string;
 ```

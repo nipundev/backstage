@@ -1,5 +1,42 @@
 # @backstage/plugin-kubernetes
 
+## 0.11.0-next.2
+
+### Patch Changes
+
+- 95518765ee: Add Kubernetes cluster plugin. Viewing Kubernetes clusters as an Admin from Backstage
+- Updated dependencies
+  - @backstage/core-components@0.13.6-next.2
+  - @backstage/core-plugin-api@1.7.0-next.1
+  - @backstage/catalog-model@1.4.3-next.0
+  - @backstage/plugin-catalog-react@1.8.5-next.2
+  - @backstage/errors@1.2.3-next.0
+  - @backstage/plugin-kubernetes-react@0.1.0-next.1
+  - @backstage/theme@0.4.3-next.0
+  - @backstage/plugin-kubernetes-common@0.7.0-next.1
+  - @backstage/config@1.1.1-next.0
+  - @backstage/types@1.1.1
+
+## 0.11.0-next.1
+
+### Minor Changes
+
+- 2d8151061c: Refactor Kubernetes plugins in line with ADR 11, no breaking changes yet
+
+### Patch Changes
+
+- Updated dependencies
+  - @backstage/core-components@0.13.6-next.1
+  - @backstage/plugin-kubernetes-common@0.7.0-next.0
+  - @backstage/plugin-kubernetes-react@0.1.0-next.0
+  - @backstage/plugin-catalog-react@1.8.5-next.1
+  - @backstage/core-plugin-api@1.7.0-next.0
+  - @backstage/config@1.1.0
+  - @backstage/catalog-model@1.4.2
+  - @backstage/errors@1.2.2
+  - @backstage/theme@0.4.2
+  - @backstage/types@1.1.1
+
 ## 0.10.4-next.0
 
 ### Patch Changes
