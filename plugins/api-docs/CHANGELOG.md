@@ -1,5 +1,44 @@
 # @backstage/plugin-api-docs
 
+## 0.10.0-next.2
+
+### Minor Changes
+
+- [#20743](https://github.com/backstage/backstage/pull/20743) [`0ac0e10822`](https://github.com/backstage/backstage/commit/0ac0e10822179a0185c70a5e63cd6d24b85beb3a) Thanks [@taras](https://github.com/taras)! - Replace GraphiQL playground with DocExplorer
+
+### Patch Changes
+
+- Updated dependencies
+  - @backstage/core-components@0.13.8-next.2
+  - @backstage/plugin-catalog@1.15.0-next.2
+  - @backstage/plugin-catalog-react@1.9.0-next.2
+
+## 0.9.13-next.1
+
+### Patch Changes
+
+- 62b5922916: Internal theme type updates
+- Updated dependencies
+  - @backstage/plugin-catalog@1.15.0-next.1
+  - @backstage/plugin-catalog-react@1.9.0-next.1
+  - @backstage/core-components@0.13.8-next.1
+  - @backstage/catalog-model@1.4.3
+  - @backstage/core-plugin-api@1.8.0-next.0
+  - @backstage/theme@0.4.4-next.0
+
+## 0.9.13-next.0
+
+### Patch Changes
+
+- 6c2b872153: Add official support for React 18.
+- Updated dependencies
+  - @backstage/core-components@0.13.7-next.0
+  - @backstage/plugin-catalog@1.15.0-next.0
+  - @backstage/plugin-catalog-react@1.9.0-next.0
+  - @backstage/core-plugin-api@1.8.0-next.0
+  - @backstage/theme@0.4.4-next.0
+  - @backstage/catalog-model@1.4.3
+
 ## 0.9.12
 
 ### Patch Changes

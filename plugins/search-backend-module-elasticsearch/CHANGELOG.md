@@ -1,5 +1,40 @@
 # @backstage/plugin-search-backend-module-elasticsearch
 
+## 1.3.10-next.2
+
+### Patch Changes
+
+- [#20212](https://github.com/backstage/backstage/pull/20212) [`006df4a581`](https://github.com/backstage/backstage/commit/006df4a58152be772fbbc9acc312195625fcd83a) Thanks [@aochsner](https://github.com/aochsner)! - Support AWS OpenSearch Serverless search backend. Does not support `_refresh` endpoint.
+
+- Updated dependencies
+  - @backstage/backend-plugin-api@0.6.7-next.2
+  - @backstage/backend-common@0.19.9-next.2
+  - @backstage/plugin-search-backend-node@1.2.11-next.2
+
+## 1.3.10-next.1
+
+### Patch Changes
+
+- Updated dependencies
+  - @backstage/backend-common@0.19.9-next.1
+  - @backstage/plugin-search-backend-node@1.2.11-next.1
+  - @backstage/backend-plugin-api@0.6.7-next.1
+  - @backstage/config@1.1.1
+  - @backstage/integration-aws-node@0.1.7
+  - @backstage/plugin-search-common@1.2.7
+
+## 1.3.10-next.0
+
+### Patch Changes
+
+- Updated dependencies
+  - @backstage/plugin-search-backend-node@1.2.11-next.0
+  - @backstage/backend-common@0.19.9-next.0
+  - @backstage/integration-aws-node@0.1.7
+  - @backstage/backend-plugin-api@0.6.7-next.0
+  - @backstage/config@1.1.1
+  - @backstage/plugin-search-common@1.2.7
+
 ## 1.3.9
 
 ### Patch Changes
