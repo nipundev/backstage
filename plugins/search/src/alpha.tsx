@@ -67,7 +67,7 @@ import { rootRouteRef } from './plugin';
 import { SearchClient } from './apis';
 import { SearchType } from './components/SearchType';
 import { UrlUpdater } from './components/SearchPage/SearchPage';
-import { convertLegacyRouteRef } from '@backstage/core-plugin-api/alpha';
+import { convertLegacyRouteRef } from '@backstage/core-compat-api';
 
 /** @alpha */
 export const SearchApi = createApiExtension({
@@ -98,7 +98,6 @@ const useSearchPageStyles = makeStyles((theme: Theme) => ({
 
 /** @alpha */
 export const SearchPage = createPageExtension({
-  id: 'plugin.search.page',
   routeRef: convertLegacyRouteRef(rootRouteRef),
   configSchema: createSchemaFromZod(z =>
     z.object({
@@ -113,8 +112,10 @@ export const SearchPage = createPageExtension({
   },
   loader: async ({ config, inputs }) => {
     const getResultItemComponent = (result: SearchResult) => {
-      const value = inputs.items.find(({ item }) => item?.predicate?.(result));
-      return value?.item.component ?? DefaultResultListItem;
+      const value = inputs.items.find(item =>
+        item?.output.item.predicate?.(result),
+      );
+      return value?.output.item.component ?? DefaultResultListItem;
     };
 
     const Component = () => {
@@ -235,7 +236,6 @@ export const SearchPage = createPageExtension({
 
 /** @alpha */
 export const SearchNavItem = createNavItemExtension({
-  id: 'plugin.search.nav.index',
   routeRef: convertLegacyRouteRef(rootRouteRef),
   title: 'Search',
   icon: SearchIcon,

@@ -15,12 +15,11 @@
  */
 
 import HomeIcon from '@material-ui/icons/Home';
-import { convertLegacyRouteRef } from '@backstage/core-plugin-api/alpha';
+import { convertLegacyRouteRef } from '@backstage/core-compat-api';
 import { createNavItemExtension } from '@backstage/frontend-plugin-api';
 import { rootRouteRef } from '../routes';
 
 export const CatalogIndexNavItem = createNavItemExtension({
-  id: 'catalog.nav.index',
   routeRef: convertLegacyRouteRef(rootRouteRef),
   title: 'Catalog',
   icon: HomeIcon,

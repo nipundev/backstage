@@ -24,12 +24,11 @@ import {
 import React from 'react';
 import { techRadarApiRef } from './api';
 import { SampleTechRadarApi } from './sample';
-import { convertLegacyRouteRef } from '@backstage/core-plugin-api/alpha';
+import { convertLegacyRouteRef } from '@backstage/core-compat-api';
 import { rootRouteRef } from './plugin';
 
 /** @alpha */
 export const TechRadarPage = createPageExtension({
-  id: 'plugin.techradar.page',
   defaultPath: '/tech-radar',
   routeRef: convertLegacyRouteRef(rootRouteRef),
   configSchema: createSchemaFromZod(z =>
@@ -48,11 +47,9 @@ export const TechRadarPage = createPageExtension({
     import('./components').then(m => <m.RadarPage {...config} />),
 });
 
-const sampleTechRadarApi = createApiExtension({
-  api: techRadarApiRef,
-  factory() {
-    return createApiFactory(techRadarApiRef, new SampleTechRadarApi());
-  },
+/** @alpha */
+export const sampleTechRadarApi = createApiExtension({
+  factory: createApiFactory(techRadarApiRef, new SampleTechRadarApi()),
 });
 
 /** @alpha */

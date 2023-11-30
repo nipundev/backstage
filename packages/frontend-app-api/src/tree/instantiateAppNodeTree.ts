@@ -18,13 +18,10 @@ import {
   AnyExtensionDataMap,
   AnyExtensionInputMap,
   ExtensionDataRef,
+  ResolvedExtensionInputs,
 } from '@backstage/frontend-plugin-api';
 import mapValues from 'lodash/mapValues';
-import {
-  AppNode,
-  AppNodeInstance,
-  AppNodeSpec,
-} from '@backstage/frontend-plugin-api';
+import { AppNode, AppNodeInstance } from '@backstage/frontend-plugin-api';
 
 type Mutable<T> = {
   -readonly [P in keyof T]: T[P];
@@ -49,7 +46,7 @@ function resolveInputData(
 function resolveInputs(
   inputMap: AnyExtensionInputMap,
   attachments: ReadonlyMap<string, { id: string; instance: AppNodeInstance }[]>,
-) {
+): ResolvedExtensionInputs<AnyExtensionInputMap> {
   const undeclaredAttachments = Array.from(attachments.entries()).filter(
     ([inputName]) => inputMap[inputName] === undefined,
   );
@@ -88,22 +85,30 @@ function resolveInputs(
         }
         throw Error(`input '${inputName}' is required but was not received`);
       }
-      return resolveInputData(input.extensionData, attachedNodes[0], inputName);
+      return {
+        extensionId: attachedNodes[0].id,
+        output: resolveInputData(
+          input.extensionData,
+          attachedNodes[0],
+          inputName,
+        ),
+      };
     }
 
-    return attachedNodes.map(attachment =>
-      resolveInputData(input.extensionData, attachment, inputName),
-    );
-  });
+    return attachedNodes.map(attachment => ({
+      extensionId: attachment.id,
+      output: resolveInputData(input.extensionData, attachment, inputName),
+    }));
+  }) as ResolvedExtensionInputs<AnyExtensionInputMap>;
 }
 
 /** @internal */
 export function createAppNodeInstance(options: {
-  spec: AppNodeSpec;
+  node: AppNode;
   attachments: ReadonlyMap<string, { id: string; instance: AppNodeInstance }[]>;
 }): AppNodeInstance {
-  const { spec, attachments } = options;
-  const { id, extension, config, source } = spec;
+  const { node, attachments } = options;
+  const { id, extension, config } = node.spec;
   const extensionData = new Map<string, unknown>();
   const extensionDataRefs = new Set<ExtensionDataRef<unknown>>();
 
@@ -118,7 +123,7 @@ export function createAppNodeInstance(options: {
 
   try {
     const namedOutputs = extension.factory({
-      source,
+      node,
       config: parsedConfig,
       inputs: resolveInputs(extension.inputs, attachments),
     });
@@ -139,7 +144,7 @@ export function createAppNodeInstance(options: {
   } catch (e) {
     throw new Error(
       `Failed to instantiate extension '${id}'${
-        e.name === 'Error' ? `, ${e.message}` : `; caused by ${e}`
+        e.name === 'Error' ? `, ${e.message}` : `; caused by ${e.stack}`
       }`,
     );
   }
@@ -186,7 +191,7 @@ export function instantiateAppNodeTree(rootNode: AppNode): void {
     }
 
     (node as Mutable<AppNode>).instance = createAppNodeInstance({
-      spec: node.spec,
+      node,
       attachments: instantiatedAttachments,
     });
 

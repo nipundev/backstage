@@ -20,7 +20,7 @@ import {
   discoveryApiRef,
   identityApiRef,
 } from '@backstage/core-plugin-api';
-import { convertLegacyRouteRef } from '@backstage/core-plugin-api/alpha';
+import { convertLegacyRouteRef } from '@backstage/core-compat-api';
 import {
   createApiExtension,
   createPageExtension,
@@ -38,7 +38,6 @@ import { catalogApiRef } from '@backstage/plugin-catalog-react';
 // TODO: It's currently possible to override the import page with a custom one. We need to decide
 //       whether this type of override is typically done with an input or by overriding the entire extension.
 const CatalogImportPageExtension = createPageExtension({
-  id: 'plugin.catalog-import.page',
   defaultPath: '/catalog-import',
   routeRef: convertLegacyRouteRef(rootRouteRef),
   loader: () => import('./components/ImportPage').then(m => <m.ImportPage />),
